@@ -22,6 +22,10 @@ namespace challenge.Services
         public ReportingStructure GetById(string id)
         {
             var employee = _employeeRepository.GetWithDirectReportsById(id);
+            if (employee == null)
+            {
+                return null;
+            }
 
             int numberOfReports = 0;
             var newDirectReports = new List<Employee>();
