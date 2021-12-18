@@ -49,5 +49,19 @@ namespace code_challenge.Tests.Integration
             Assert.AreEqual(expectedLastName, reportingStructure.Employee.LastName);
             Assert.AreEqual(expectedNumberOfReports, reportingStructure.NumberOfReports);
         }
+
+        [TestMethod]
+        public void GetReportingStructureByEmployeeId_InvalidEmployeeId_Returns_NotFound() 
+        {
+            // Arrange
+            var employeeId = "abcdefg";
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/employee/reporting-structure/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }
