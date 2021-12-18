@@ -27,7 +27,7 @@ namespace challenge.Services
                 return null;
             }
 
-            int numberOfReports = 0;
+            var numberOfReports = 0;
             var newDirectReports = new List<Employee>();
 
             employee.DirectReports?.ForEach(reportingEmployee => 
@@ -42,6 +42,7 @@ namespace challenge.Services
                 numberOfReports += reportingStructure.NumberOfReports;
             });
 
+            // apply sub structure of direct reports
             employee.DirectReports = newDirectReports;
 
             return new ReportingStructure()
