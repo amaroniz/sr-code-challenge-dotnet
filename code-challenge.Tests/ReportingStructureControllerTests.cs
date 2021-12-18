@@ -39,7 +39,7 @@ namespace code_challenge.Tests.Integration
                                                                  string expectedLastName, int expectedNumberOfReports)
         {
             // Execute
-            var getRequestTask = _httpClient.GetAsync($"api/reporting-structure/{employeeId}");
+            var getRequestTask = _httpClient.GetAsync($"api/employee/reporting-structure/{employeeId}");
             var response = getRequestTask.Result;
 
             // Assert
