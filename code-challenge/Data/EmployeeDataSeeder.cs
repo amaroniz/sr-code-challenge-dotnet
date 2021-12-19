@@ -12,6 +12,7 @@ namespace challenge.Data
     {
         private EmployeeContext _employeeContext;
         private const String EMPLOYEE_SEED_DATA_FILE = "resources/EmployeeSeedData.json";
+        private const String COMPENSATION_SEED_DATA_FILE = "resources/CompensationSeedData.json";
 
         public EmployeeDataSeeder(EmployeeContext employeeContext)
         {
@@ -27,21 +28,22 @@ namespace challenge.Data
 
                 await _employeeContext.SaveChangesAsync();
             }
+
+            // Compensations reference Employees, do intialization after Employees.
+            if (!_employeeContext.Compensations.Any())
+            {
+                List<Compensation> compensations = LoadCompensations();
+                _employeeContext.Compensations.AddRange(compensations);
+
+                await _employeeContext.SaveChangesAsync();
+            }
         }
 
         private List<Employee> LoadEmployees()
         {
-            using (FileStream fs = new FileStream(EMPLOYEE_SEED_DATA_FILE, FileMode.Open))
-            using (StreamReader sr = new StreamReader(fs))
-            using (JsonReader jr = new JsonTextReader(sr))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-
-                List<Employee> employees = serializer.Deserialize<List<Employee>>(jr);
-                FixUpReferences(employees);
-
-                return employees;
-            }
+            var employees = LoadModelsFromFile<Employee>(EMPLOYEE_SEED_DATA_FILE);
+            FixUpReferences(employees);
+            return employees;
         }
 
         private void FixUpReferences(List<Employee> employees)
@@ -63,6 +65,27 @@ namespace challenge.Data
                     employee.DirectReports = referencedEmployees;
                 }
             });
+        }
+
+        private List<Compensation> LoadCompensations()
+        {
+            var compensations = LoadModelsFromFile<Compensation>(COMPENSATION_SEED_DATA_FILE);
+            // TODO fix references to employee id to point to employee object
+            return compensations;
+        }
+
+        private List<T> LoadModelsFromFile<T>(String seedDataFile)
+        {
+            using (FileStream fs = new FileStream(EMPLOYEE_SEED_DATA_FILE, FileMode.Open))
+            using (StreamReader sr = new StreamReader(fs))
+            using (JsonReader jr = new JsonTextReader(sr))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+
+                List<T> models = serializer.Deserialize<List<T>>(jr);
+
+                return models;
+            }
         }
     }
 }
