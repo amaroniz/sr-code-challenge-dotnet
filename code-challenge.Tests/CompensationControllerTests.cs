@@ -73,12 +73,19 @@ namespace code_challenge.Tests.Integration
         public void GetCompensationById_Returns_Ok()
         {
             // Arrange
+            var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
+            var expectedSalary = 200000;
+            var expectedEffectiveDate = "2017-04-12";
 
             // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/employee/compensation/{employeeId}");
+            var response = getRequestTask.Result;
 
             // Assert
-            // TODO make possible to query on clean setup by seeding an existing entry
-            Assert.IsTrue(false);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var compensation = response.DeserializeContent<Compensation>();
+            Assert.AreEqual(expectedSalary, compensation.Salary);
+            Assert.AreEqual(expectedEffectiveDate, compensation.EffectiveDate);
         }
     }
 }
