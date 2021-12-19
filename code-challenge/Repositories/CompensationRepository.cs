@@ -27,7 +27,7 @@ namespace challenge.Repositories
 
         public Compensation GetById(string id)
         {
-            throw new NotImplementedException();
+            return _employeeContext.Compensations.SingleOrDefault(e => e.Employee.EmployeeId == id);
         }
 
         public Task SaveAsync()

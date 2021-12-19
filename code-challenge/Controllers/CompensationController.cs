@@ -10,13 +10,15 @@ using challenge.Models;
 namespace challenge.Controllers
 {
     [Route("api/employee/compensation")]
-    public class CompensationController
+    public class CompensationController : Controller
     {
         private readonly ILogger _logger;
+        private readonly ICompensationService _compensationService;
 
-        public CompensationController(ILogger<CompensationController> logger)
+        public CompensationController(ILogger<CompensationController> logger, ICompensationService compensationService)
         {
             _logger = logger;
+            _compensationService = compensationService;
         }
 
         [HttpPost]
@@ -28,7 +30,14 @@ namespace challenge.Controllers
         [HttpGet("{id}", Name = "getCompensationById")]
         public IActionResult GetCompensationById(String id)
         {
-            return null;
+            _logger.LogDebug($"Received compensation get request for '{id}'.");
+
+            var compensation = _compensationService.GetById(id);
+
+            if (compensation == null)
+                return NotFound();
+
+            return Ok(compensation);
         }
     }
 }
