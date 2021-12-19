@@ -87,5 +87,19 @@ namespace code_challenge.Tests.Integration
             Assert.AreEqual(expectedSalary, compensation.Salary);
             Assert.AreEqual(expectedEffectiveDate, compensation.EffectiveDate);
         }
+
+        [TestMethod]
+        public void GetCompensationById_InvalidEmployeeId_Returns_NotFound()
+        {
+            // Arrange
+            var employeeId = "abcdefg";
+
+            // Execute
+            var getRequestTask = _httpClient.GetAsync($"api/employee/compensation/{employeeId}");
+            var response = getRequestTask.Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }
