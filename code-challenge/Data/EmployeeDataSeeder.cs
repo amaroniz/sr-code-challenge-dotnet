@@ -76,7 +76,7 @@ namespace challenge.Data
 
         private List<T> LoadModelsFromFile<T>(String seedDataFile)
         {
-            using (FileStream fs = new FileStream(EMPLOYEE_SEED_DATA_FILE, FileMode.Open))
+            using (FileStream fs = new FileStream(seedDataFile, FileMode.Open))
             using (StreamReader sr = new StreamReader(fs))
             using (JsonReader jr = new JsonTextReader(sr))
             {
