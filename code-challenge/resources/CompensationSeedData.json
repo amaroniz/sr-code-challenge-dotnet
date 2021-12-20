@@ -1,0 +1,18 @@
+﻿[
+  {
+    "compensationId": "dc1a7f20-a42e-4756-92d6-4028837a41a6",
+    "employee": {
+      "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f"
+    },
+    "salary": 200000,
+    "effectiveDate": "2017-04-12"
+  },
+  {
+    "compensationId": "c499f13a-4d43-4cdb-a907-685eecea9d7b",
+    "employee": {
+      "employeeId": "03aa1462-ffa9-4978-901b-7c001562cf6f"
+    },
+    "salary": 150000,
+    "effectiveDate": "2019-07-01"
+  }
+]
