@@ -75,7 +75,7 @@ namespace code_challenge.Tests.Integration
             // Arrange
             var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
             var expectedSalary = 200000;
-            var expectedEffectiveDate = "2017-04-12";
+            var expectedEffectiveDate = DateTime.Parse("2017-04-12");
 
             // Execute
             var getRequestTask = _httpClient.GetAsync($"api/employee/compensation/{employeeId}");

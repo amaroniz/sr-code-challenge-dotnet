@@ -32,7 +32,7 @@ namespace challenge.Data
             // Compensations reference Employees, do intialization after Employees.
             if (!_employeeContext.Compensations.Any())
             {
-                List<Compensation> compensations = LoadCompensations();
+                List<Compensation> compensations = LoadCompensations(_employeeContext.Employees.ToList());
                 _employeeContext.Compensations.AddRange(compensations);
 
                 await _employeeContext.SaveChangesAsync();
@@ -67,11 +67,26 @@ namespace challenge.Data
             });
         }
 
-        private List<Compensation> LoadCompensations()
+        private List<Compensation> LoadCompensations(List<Employee> employees)
         {
             var compensations = LoadModelsFromFile<Compensation>(COMPENSATION_SEED_DATA_FILE);
-            // TODO fix references to employee id to point to employee object
+            FixUpReferences(compensations, employees);
             return compensations;
+        }
+
+        private void FixUpReferences(List<Compensation> compensations, List<Employee> employees)
+        {
+            var employeeIdRefMap = from employee in employees
+                                   select new { Id = employee.EmployeeId, EmployeeRef = employee };
+
+            compensations.ForEach(compensation =>
+            {
+                if (compensation.Employee != null)
+                {
+                    var referencedEmployee = employeeIdRefMap.First(e => e.Id == compensation.Employee.EmployeeId).EmployeeRef;
+                    compensation.Employee = referencedEmployee;
+                }
+            });
         }
 
         private List<T> LoadModelsFromFile<T>(String seedDataFile)
