@@ -26,9 +26,12 @@ namespace challenge.Controllers
         {
             _logger.LogDebug($"Received compensation create request for '{compensation.Employee.FirstName} {compensation.Employee.LastName}'");
 
-            _compensationService.Create(compensation);
+            var compensationResult = _compensationService.Create(compensation);
 
-            return CreatedAtRoute("getCompensationById", new { id = compensation.Employee.EmployeeId}, compensation);
+            if (compensationResult == null)
+                return BadRequest();
+
+            return CreatedAtRoute("getCompensationById", new { id = compensationResult.Employee.EmployeeId}, compensationResult);
         }
 
         [HttpGet("{id}", Name = "getCompensationById")]

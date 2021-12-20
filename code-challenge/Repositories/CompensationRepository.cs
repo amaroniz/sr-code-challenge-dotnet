@@ -22,8 +22,13 @@ namespace challenge.Repositories
 
         public Compensation Add(Compensation compensation)
         {
+            var employeeRef = _employeeContext.Employees.Find(compensation.Employee?.EmployeeId ?? null);
+
+            if (employeeRef == null)
+                return null;
+
             compensation.CompensationId = Guid.NewGuid().ToString();
-            compensation.Employee = _employeeContext.Employees.Find(compensation.Employee?.EmployeeId ?? null);
+            compensation.Employee = employeeRef;
 
             _employeeContext.Compensations.Add(compensation);
 

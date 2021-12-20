@@ -23,8 +23,10 @@ namespace challenge.Services
         {
             if (compensation != null)
             {
-                _compensationRepository.Add(compensation);
+                var compensationResult = _compensationRepository.Add(compensation);
                 _compensationRepository.SaveAsync().Wait();
+
+                return compensationResult;
             }
 
             return compensation;
