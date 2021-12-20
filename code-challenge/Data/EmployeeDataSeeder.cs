@@ -21,22 +21,19 @@ namespace challenge.Data
 
         public async Task Seed()
         {
-            if(!_employeeContext.Employees.Any())
+            if (_employeeContext.Employees.Any() || _employeeContext.Compensations.Any())
             {
-                List<Employee> employees = LoadEmployees();
-                _employeeContext.Employees.AddRange(employees);
-
-                await _employeeContext.SaveChangesAsync();
+                return; // Has been seeded
             }
+
+            List<Employee> employees = LoadEmployees();
+            _employeeContext.Employees.AddRange(employees);
 
             // Compensations reference Employees, do intialization after Employees.
-            if (!_employeeContext.Compensations.Any())
-            {
-                List<Compensation> compensations = LoadCompensations(_employeeContext.Employees.ToList());
-                _employeeContext.Compensations.AddRange(compensations);
+            List<Compensation> compensations = LoadCompensations(employees);
+            _employeeContext.Compensations.AddRange(compensations);
 
-                await _employeeContext.SaveChangesAsync();
-            }
+            await _employeeContext.SaveChangesAsync();
         }
 
         private List<Employee> LoadEmployees()
