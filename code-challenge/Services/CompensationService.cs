@@ -19,6 +19,17 @@ namespace challenge.Services
             _compensationRepository = compensationRepository;
         }
 
+        public Compensation Create(Compensation compensation)
+        {
+            if (compensation != null)
+            {
+                _compensationRepository.Add(compensation);
+                _compensationRepository.SaveAsync().Wait();
+            }
+
+            return compensation;
+        }
+
         public Compensation GetById(string id)
         {
             if (!String.IsNullOrEmpty(id))

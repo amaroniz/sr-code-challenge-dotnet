@@ -22,7 +22,12 @@ namespace challenge.Repositories
 
         public Compensation Add(Compensation compensation)
         {
-            throw new NotImplementedException();
+            compensation.CompensationId = Guid.NewGuid().ToString();
+            compensation.Employee = _employeeContext.Employees.Find(compensation.Employee?.EmployeeId ?? null);
+
+            _employeeContext.Compensations.Add(compensation);
+
+            return compensation;
         }
 
         public Compensation GetById(string id)
@@ -32,7 +37,7 @@ namespace challenge.Repositories
 
         public Task SaveAsync()
         {
-            throw new NotImplementedException();
+            return _employeeContext.SaveChangesAsync();
         }
     }
 }
