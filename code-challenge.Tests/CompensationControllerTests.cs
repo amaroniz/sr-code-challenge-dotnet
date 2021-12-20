@@ -48,7 +48,7 @@ namespace code_challenge.Tests.Integration
             {
                 Employee = new Employee()
                     {
-                        EmployeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f"
+                        EmployeeId = "b7839309-3348-463b-a7e3-5de1c168beb3"
                 },
                 Salary = 150000.00,
                 EffectiveDate = DateTime.Today
