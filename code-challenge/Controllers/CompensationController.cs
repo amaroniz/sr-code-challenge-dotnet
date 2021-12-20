@@ -24,7 +24,7 @@ namespace challenge.Controllers
         [HttpPost]
         public IActionResult CreateCompensation([FromBody] Compensation compensation)
         {
-            _logger.LogDebug($"Received compensation create request for '{compensation.Employee.FirstName} {compensation.Employee.LastName}'");
+            _logger.LogDebug($"Received compensation create request for '{compensation.Employee?.EmployeeId ?? "unspecified employee id"}'");
 
             var compensationResult = _compensationService.Create(compensation);
 
