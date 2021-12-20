@@ -50,7 +50,7 @@ namespace code_challenge.Tests.Integration
                     {
                         EmployeeId = "b7839309-3348-463b-a7e3-5de1c168beb3"
                 },
-                Salary = 150000.00,
+                Salary = 150000,
                 EffectiveDate = DateTime.Today
             };
             var requestContent = new JsonSerialization().ToJson(compensation);
@@ -79,7 +79,7 @@ namespace code_challenge.Tests.Integration
                 {
                     EmployeeId = "abcdefg"
                 },
-                Salary = 123.12,
+                Salary = 1234567,
                 EffectiveDate = DateTime.Today
             };
             var requestContent = new JsonSerialization().ToJson(compensation);
@@ -100,7 +100,7 @@ namespace code_challenge.Tests.Integration
             var compensation = new Compensation()
             {
                 Employee = null,
-                Salary = 123.12,
+                Salary = 1234567,
                 EffectiveDate = DateTime.Today
             };
             var requestContent = new JsonSerialization().ToJson(compensation);
